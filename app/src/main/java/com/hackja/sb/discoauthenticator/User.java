@@ -23,4 +23,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    public boolean isEqual(User user){
+        return user.getEmail().equals(email) && user.getPassword().equals(password);
+    }
 }

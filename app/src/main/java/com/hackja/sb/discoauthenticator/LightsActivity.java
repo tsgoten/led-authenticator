@@ -7,6 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LightsActivity extends AppCompatActivity {
 
@@ -19,12 +26,29 @@ public class LightsActivity extends AppCompatActivity {
 
     int ans;
 
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference usersRef = firebaseDatabase.getReference("users");
+    DatabaseReference codeRef = firebaseDatabase.getReference("currentCode");
+
+    int lightCode = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lights);
 
-        ans=0;
+        codeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("snapshot", dataSnapshot.getValue()+"");
+                lightCode = Integer.parseInt(dataSnapshot.getValue().toString());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         light1=(CheckBox)findViewById(R.id.light1);
         light2=(CheckBox)findViewById(R.id.light2);
@@ -36,29 +60,36 @@ public class LightsActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (light1.isChecked()){
+                ans=0;
+                if (light5.isChecked()){
                     ans+=Math.pow(10, 0);
                 }
-                if (light2.isChecked()){
+                if (light4.isChecked()){
                     ans+=Math.pow(10, 1);
                 }
                 if (light3.isChecked()){
                     ans+=Math.pow(10, 2);
                 }
-                if (light4.isChecked()){
+                if (light2.isChecked()){
                     ans+=Math.pow(10, 3);
                 }
-                if (light5.isChecked()){
+                if (light1.isChecked()){
                     ans+=Math.pow(10, 4);
                 }
-
-                Log.d("Code", "input: "+ans);
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", Integer.toString(ans));
-                Log.d("Code", "hey i'm about to enter onActivityResult okay");
-                setResult(3, returnIntent);
-                finish();//check if the code is right before moving on, this is just a test
+                Log.d("ans", ans+"");
+                Log.d("lightcode", lightCode+"");
+                if(lightCode==ans) {
+                    finish();//check if the code is right before moving on, this is just a test
+                }
+                else{
+                    Toast.makeText(LightsActivity.this, "Did not work", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

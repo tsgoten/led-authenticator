@@ -14,9 +14,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     //Views
@@ -29,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Intent intent;
 
-    int correct=-1;
+    ArrayList<User> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,35 +50,31 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                usersRef.child(usersRef.push().getKey()).setValue(new User(email.getText().toString(), password.getText().toString()));
-                correct=resetCode();
-                startActivityForResult(intent, 2); //2 requests code, 3 sends it back
+                if(validEntry()) {
+                    resetCode();
+                    finish();
+                }
+                else{
+                    Toast.makeText(LoginActivity.this, "Unregistered User", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                    users.add(new User((String)userSnapshot.child("email").getValue(), (String) userSnapshot.child("password").getValue()));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==3) {
-            Log.d("Code", "hey so I've enetered onActivityResult");
-            String check = intent.getStringExtra("result");
-            Log.d("Code", "input2: " + check);
-            if (check.equals(Integer.toString(correct))) {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("valid", true);
-                setResult(1, returnIntent);
-            } else {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("valid", false);
-                setResult(1, returnIntent);
-            }
-            finish();
-        }
-    }
-
-    public int resetCode(){
+    public void resetCode(){
         boolean [] lightsOn=new boolean[5];
         boolean valid=false;
         for (int i=0; i<5; i++){
@@ -96,8 +96,18 @@ public class LoginActivity extends AppCompatActivity {
         }
         Log.d("Code", ans+"");
         codeRef.setValue(ans);
-        return ans;
     }
 
+    @Override
+    public void onBackPressed() {
 
+    }
+    public boolean validEntry(){
+        User entry = new User(email.getText().toString(), password.getText().toString());
+        for(User user: users){
+            if(entry.isEqual(user))
+                return true;
+        }
+        return false;
+    }
 }
