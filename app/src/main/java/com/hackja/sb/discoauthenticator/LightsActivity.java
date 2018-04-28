@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,11 +18,19 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LightsActivity extends AppCompatActivity {
 
-    CheckBox light1;
+    /*CheckBox light1;
     CheckBox light2;
     CheckBox light3;
     CheckBox light4;
-    CheckBox light5;
+    CheckBox light5;*/
+    ImageView light1;
+    ImageView light2;
+    ImageView light3;
+    ImageView light4;
+    ImageView light5;
+
+    boolean[] lights;
+
     Button submit;
 
     int ans;
@@ -50,30 +59,100 @@ public class LightsActivity extends AppCompatActivity {
         });
 
 
-        light1=(CheckBox)findViewById(R.id.light1);
-        light2=(CheckBox)findViewById(R.id.light2);
-        light3=(CheckBox)findViewById(R.id.light3);
-        light4=(CheckBox)findViewById(R.id.light4);
-        light5=(CheckBox)findViewById(R.id.light5);
+        lights=new boolean[5];
+        for (int i=0; i<lights.length; i++){
+            lights[i]=false;
+        }
+
+        light1=(ImageView)findViewById(R.id.light1);
+        light2=(ImageView)findViewById(R.id.light2);
+        light3=(ImageView)findViewById(R.id.light3);
+        light4=(ImageView)findViewById(R.id.light4);
+        light5=(ImageView)findViewById(R.id.light5);
         submit=(Button)findViewById(R.id.submit);
+
+        light1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lights[0]){
+                    lights[0]=false;
+                    light1.setImageResource(R.drawable.yellowoff);
+                } else {
+                    lights[0]=true;
+                    light1.setImageResource(R.drawable.yellowon);
+                }
+            }
+        });
+
+        light2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lights[1]){
+                    lights[1]=false;
+                    light2.setImageResource(R.drawable.greenoff);
+                } else {
+                    lights[1]=true;
+                    light2.setImageResource(R.drawable.greenon);
+                }
+            }
+        });
+
+        light3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lights[2]){
+                    lights[2]=false;
+                    light3.setImageResource(R.drawable.blueoff);
+                } else {
+                    lights[2]=true;
+                    light3.setImageResource(R.drawable.blueon);
+                }
+            }
+        });
+
+        light4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lights[3]){
+                    lights[3]=false;
+                    light4.setImageResource(R.drawable.greenoff);
+                } else {
+                    lights[3]=true;
+                    light4.setImageResource(R.drawable.greenon);
+                }
+            }
+        });
+
+        light5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lights[4]){
+                    lights[4]=false;
+                    light5.setImageResource(R.drawable.redoff);
+                } else {
+                    lights[4]=true;
+                    light5.setImageResource(R.drawable.redon);
+                }
+            }
+        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ans=0;
-                if (light5.isChecked()){
+                if (lights[4]){
                     ans+=Math.pow(10, 0);
                 }
-                if (light4.isChecked()){
+                if (lights[3]){
                     ans+=Math.pow(10, 1);
                 }
-                if (light3.isChecked()){
+                if (lights[2]){
                     ans+=Math.pow(10, 2);
                 }
-                if (light2.isChecked()){
+                if (lights[1]){
                     ans+=Math.pow(10, 3);
                 }
-                if (light1.isChecked()){
+                if (lights[0]){
                     ans+=Math.pow(10, 4);
                 }
                 Log.d("ans", ans+"");

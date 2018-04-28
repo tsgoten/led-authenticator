@@ -11,42 +11,40 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <CheckBox
+        <ImageView
             android:id="@+id/light1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Light 1" />
+            app:srcCompat="@android:color/background_light"
+            android:src="@drawable/yellowoff"/>
 
-        <CheckBox
+        <ImageView
             android:id="@+id/light2"
-            android:layout_width="339dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="68dp"
-            android:text="Light 2"
-            app:layout_constraintEnd_toStartOf="@+id/light3"
-            tools:layout_editor_absoluteY="55dp" />
+            android:src="@drawable/greenoff"
+            app:srcCompat="@android:color/background_light" />
 
-        <CheckBox
+        <ImageView
             android:id="@+id/light3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Light 3"
-            app:layout_constraintEnd_toStartOf="@+id/light5"
-            tools:layout_editor_absoluteY="105dp" />
+            app:srcCompat="@android:color/background_light"
+            android:src="@drawable/blueoff"/>
 
-        <CheckBox
+        <ImageView
             android:id="@+id/light4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Light 4" />
+            app:srcCompat="@android:color/background_light"
+            android:src="@drawable/greenoff"/>
 
-        <CheckBox
+        <ImageView
             android:id="@+id/light5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Light5"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:srcCompat="@android:color/background_light"
+            android:src="@drawable/redoff"/>
 
         <Button
             android:id="@+id/submit"
