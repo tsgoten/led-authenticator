@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LightsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/light1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Light 1" />
+
+        <CheckBox
+            android:id="@+id/light2"
+            android:layout_width="339dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="68dp"
+            android:text="Light 2"
+            app:layout_constraintEnd_toStartOf="@+id/light3"
+            tools:layout_editor_absoluteY="55dp" />
+
+        <CheckBox
+            android:id="@+id/light3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Light 3"
+            app:layout_constraintEnd_toStartOf="@+id/light5"
+            tools:layout_editor_absoluteY="105dp" />
+
+        <CheckBox
+            android:id="@+id/light4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Light 4" />
+
+        <CheckBox
+            android:id="@+id/light5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Light5"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
